@@ -13,7 +13,9 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link rel="stylesheet" href="./src/css/main.css" />
+
     <script>
+        // Critical blocking task for theme
         (function() {
             const savedTheme = localStorage.getItem('bolf-theme');
             if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
@@ -22,6 +24,7 @@
         })();
     </script>
 </head>
+
 <body>
     <!-- Background Effect -->
     <canvas id="medusae-canvas" class="bg-canvas"></canvas>
@@ -103,6 +106,7 @@
         import { TranslationManager } from './src/js/managers/TranslationManager.js';
         import { ThemeManager } from './src/js/managers/ThemeManager.js';
         import { MedusaeEffect } from './src/js/components/MedusaeEffect.js';
+
         
         const i18n = new TranslationManager();
         const theme = new ThemeManager('theme-toggle');

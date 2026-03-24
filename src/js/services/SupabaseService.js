@@ -2,7 +2,8 @@
  * SupabaseService
  * Handles all database interactions.
  */
-import { createClient } from '@supabase/supabase-js';
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+
 
 export class SupabaseService {
   constructor(url, key) {

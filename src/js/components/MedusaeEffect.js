@@ -1,4 +1,5 @@
-import * as THREE from 'https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.min.js';
+import * as THREE from 'https://cdn.skypack.dev/three@0.128.0';
+
 
 export class MedusaeEffect {
   constructor(canvasId) {
