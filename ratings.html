@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOLF Medya - Değerlendirmeler</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <link rel="stylesheet" href="./src/css/main.css" />
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('bolf-theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+</head>
+<body>
+    <!-- Background Effect -->
+    <canvas id="float-particles-canvas" class="bg-canvas"></canvas>
+
+    <header>
+        <nav class="container site-nav">
+            <!-- Left Side: Site Name -->
+            <a href="/" class="brand">
+                <span class="material-symbols-outlined filled text-primary">sports_esports</span>
+                <span data-i18n="site-title">BOLF Medya</span>
+            </a>
+
+            <!-- Right Side: Navigation & Controls -->
+            <div class="nav-group-right">
+                <div class="nav-links">
+                    <a href="/" class="nav-link" data-i18n="nav-home">Ana Sayfa</a>
+                    <a href="/ratings.html" class="nav-link active" data-i18n="nav-rating">Değerlendirmeler</a>
+                </div>
+                <div class="controls">
+                    <!-- Language Dropdown -->
+                    <div class="dropdown" id="lang-dropdown">
+                        <button class="btn-icon">
+                            <span class="material-symbols-outlined">public</span>
+                        </button>
+                        <div class="dropdown-content" id="lang-menu">
+                            <div class="dropdown-item" data-lang="tr">
+                                <span>Türkçe</span>
+                                <span class="material-symbols-outlined check-icon">check</span>
+                            </div>
+                            <div class="dropdown-item" data-lang="en">
+                                <span>English</span>
+                                <span class="material-symbols-outlined check-icon">check</span>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Theme Toggle -->
+                    <button class="btn-icon theme-switch" id="theme-toggle">
+                        <span class="material-symbols-outlined">dark_mode</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container content-overlay">
+        <section class="library-header text-center" style="padding: 5rem 0 3rem;">
+            <h1 class="hero-title-small" data-i18n="hero-title">Oynadım & Değerlendirdim</h1>
+            <p class="hero-subtitle" data-i18n="hero-subtitle">Dijital dünyalarda yaptığım keşiflerin kişisel koleksiyonu.</p>
+        </section>
+
+        <section class="toolbar">
+            <div class="sort-group" style="display: flex; gap: 0.75rem; align-items: center;">
+                <span data-i18n="sort-library" style="color: var(--text-muted); font-size: 0.75rem; font-weight: 800; text-transform: uppercase; margin-right: 0.5rem;">Arşivi Sırala:</span>
+                <button class="btn-sort" id="sort-rating">
+                    <span class="material-symbols-outlined">star</span>
+                    <span data-i18n="sort-rating">Puan</span>
+                </button>
+                <button class="btn-sort" id="sort-name">
+                    <span class="material-symbols-outlined">sort_by_alpha</span>
+                    <span data-i18n="sort-name">İsim</span>
+                </button>
+                <button class="btn-sort" id="sort-newest">
+                    <span class="material-symbols-outlined">calendar_today</span>
+                    <span data-i18n="sort-newest">En Yeni</span>
+                </button>
+            </div>
+
+            <div class="search-wrapper">
+                <span class="material-symbols-outlined search-icon">search</span>
+                <input type="text" class="search-input" data-i18n="search-placeholder" placeholder="Oyun ara..." id="search-input">
+            </div>
+        </section>
+
+        <div class="games-grid" id="games-container">
+            <!-- Games will be injected here -->
+        </div>
+    </main>
+
+    <script type="module">
+        import { TranslationManager } from './src/js/managers/TranslationManager.js';
+        import { ThemeManager } from './src/js/managers/ThemeManager.js';
+        import { LibraryManager } from './src/js/managers/LibraryManager.js';
+        import { SupabaseService } from './src/js/services/SupabaseService.js';
+        import { FloatingParticles } from './src/js/components/FloatingParticles.js';
+
+        const i18n = new TranslationManager();
+        const theme = new ThemeManager('theme-toggle');
+        const floating = new FloatingParticles('float-particles-canvas');
+        
+        // Placeholder credentials
+        const SB_URL = 'https://rhnjzjwbnukwgfpdkpqk.supabase.co';
+        const SB_KEY = 'YOUR_KEY_HERE';
+        const sbService = new SupabaseService(SB_URL, SB_KEY);
+        
+        const library = new LibraryManager('games-container', sbService, i18n);
+
+        // Language Dropdown Logic
+        const langDropdown = document.getElementById('lang-dropdown');
+        const langMenu = document.getElementById('lang-menu');
+        
+        langDropdown.addEventListener('click', (e) => {
+            e.stopPropagation();
+            langMenu.classList.toggle('show');
+        });
+
+        document.querySelectorAll('.dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const lang = item.getAttribute('data-lang');
+                i18n.setLanguage(lang);
+                updateActiveLangStyles();
+                langMenu.classList.remove('show');
+                library.render(); 
+            });
+        });
+
+        window.addEventListener('click', () => langMenu.classList.remove('show'));
+
+        const updateActiveLangStyles = () => {
+            document.querySelectorAll('.dropdown-item').forEach(item => {
+                const isActive = item.getAttribute('data-lang') === i18n.currentLang;
+                item.classList.toggle('active', isActive);
+                const check = item.querySelector('.check-icon');
+                if (check) check.style.display = isActive ? 'block' : 'none';
+            });
+        };
+
+        // Search & Sort listeners
+        document.getElementById('search-input').addEventListener('input', (e) => library.search(e.target.value));
+        document.getElementById('sort-rating').addEventListener('click', () => library.sort('rating'));
+        document.getElementById('sort-name').addEventListener('click', () => library.sort('name'));
+        document.getElementById('sort-newest').addEventListener('click', () => library.sort('newest'));
+
+        // Init
+        i18n.updateUI();
+        updateActiveLangStyles();
+        library.init();
+    </script>
+</body>
+</html>

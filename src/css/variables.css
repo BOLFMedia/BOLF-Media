@@ -1,0 +1,53 @@
+:root {
+  /* Core Palette (Reference Only) */
+  --palette-black: #000000;
+  --palette-navy-dark: #001D34;
+  --palette-navy: #033255;
+  --palette-blue-deep: #23496D;
+  --palette-blue-muted: #3D6186;
+  --palette-blue-grey: #567AA0;
+  --palette-blue-medium: #7094BB;
+  --palette-blue-light: #8AAED7;
+  --palette-blue-soft: #A5CAF4;
+  --palette-blue-extra-light: #D0E4FF;
+  --palette-blue-off-white: #E9F1FF;
+  --palette-white: #FFFFFF;
+  --palette-primary: #54789E;
+
+  /* Theme: Light (Default) */
+  --color-primary: var(--palette-primary);
+  --color-primary-glow: rgba(84, 120, 158, 0.2);
+  
+  --bg-main: var(--palette-white);
+  --bg-soft: var(--palette-blue-off-white);
+  --surface: var(--palette-white);
+  --surface-hover: var(--palette-blue-extra-light);
+  
+  --text-main: var(--palette-navy-dark);
+  --text-inverse: var(--palette-white);
+  --text-muted: var(--palette-blue-muted);
+  
+  --border: rgba(0, 29, 52, 0.1);
+  --shadow: rgba(0, 0, 0, 0.05);
+
+  --header-bg: rgba(255, 255, 255, 0.85);
+}
+
+/* Theme: Dark (Toggleable) */
+[data-theme="dark"] {
+  --bg-main: var(--palette-black);
+  --bg-soft: var(--palette-navy-dark);
+  --surface: var(--palette-navy);
+  --surface-hover: var(--palette-blue-deep);
+  
+  --text-main: var(--palette-blue-off-white);
+  --text-inverse: var(--palette-black);
+  --text-muted: var(--palette-blue-medium);
+  
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: rgba(0, 0, 0, 0.4);
+
+  --header-bg: rgba(0, 0, 0, 0.85);
+  
+  --color-primary-glow: rgba(84, 120, 158, 0.4);
+}

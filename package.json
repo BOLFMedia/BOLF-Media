@@ -1,0 +1,24 @@
+{
+  "name": "bolf-media-website",
+  "version": "1.0.0",
+  "description": "BOLF Medya - Digital Playroom & Game Reviews",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BOLFMedia/BOLF-Media.git"
+  },
+  "keywords": [],
+  "author": "BOLF Medya",
+  "license": "ISC",
+  "devDependencies": {
+    "vite": "^8.0.2"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.100.0"
+  }
+}
