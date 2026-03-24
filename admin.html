@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BOLF Medya - Admin Panel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
+    <link rel="stylesheet" href="./src/css/main.css" />
+    <link rel="stylesheet" href="./src/css/admin.css" />
+    <style>
+        .total-score-card {
+            background: var(--color-primary);
+            background: linear-gradient(135deg, var(--color-primary), var(--palette-navy));
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 0.5rem;
+            box-shadow: 0 5px 20px var(--color-primary-glow);
+        }
+
+        .total-score-label {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            opacity: 0.8;
+        }
+
+        .total-score-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            line-height: 1;
+        }
+    </style>
+    <script>
+        (function () {
+            const savedTheme = localStorage.getItem('bolf-theme');
+            if (savedTheme === 'dark' || (!savedTheme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+</head>
+
+<body>
+    <!-- Background Effect -->
+    <canvas id="float-particles-canvas" class="bg-canvas"></canvas>
+
+    <header>
+        <nav class="container site-nav">
+            <a href="index.html" class="brand">
+                <span class="material-symbols-outlined filled text-primary">sports_esports</span>
+                <span>BOLF Medya <small class="text-muted ml-2">Admin</small></span>
+            </a>
+            <div class="nav-group-right">
+                <div class="controls">
+                    <button class="btn-icon theme-switch" id="theme-toggle">
+                        <span class="material-symbols-outlined">dark_mode</span>
+                    </button>
+                    <button class="btn btn-secondary hidden" id="logout-btn">
+                        <span class="material-symbols-outlined">logout</span>
+                        <span>Çıkış Yap</span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container admin-container">
+        <!-- Login Section -->
+        <section id="login-section" class="auth-section">
+            <div class="auth-card glass">
+                <h1 class="hero-title-small">Yönetici Girişi</h1>
+                <p class="text-muted mb-6">Devam etmek için giriş yapın.</p>
+                <form id="login-form" class="admin-form">
+                    <div class="form-group mb-4">
+                        <label for="email">E-posta</label>
+                        <input type="email" id="email" required placeholder="" class="form-input">
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="password">Şifre</label>
+                        <input type="password" id="password" required placeholder="" class="form-input">
+                    </div>
+                    <button type="submit" class="btn btn-primary w-full mt-4">Giriş Yap</button>
+                    <p id="login-error" class="error-msg hidden mt-2 text-error"></p>
+                </form>
+            </div>
+        </section>
+
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="dashboard-section hidden">
+            <div class="admin-layout">
+                <!-- Sidebar: Games List -->
+                <aside class="admin-sidebar glass">
+                    <div class="sidebar-header">
+                        <h2 class="text-xl font-bold">Kütüphane</h2>
+                        <button class="btn-icon theme-switch" id="new-game-btn" title="Yeni Oyun Ekle">
+                            <span class="material-symbols-outlined">add</span>
+                        </button>
+                    </div>
+                    <div id="admin-games-list" class="sidebar-list">
+                        <!-- Game items will be loaded here -->
+                        <p class="loading-text">Yükleniyor...</p>
+                    </div>
+                </aside>
+
+                <!-- Main: Form Area -->
+                <article class="admin-main glass">
+                    <div class="form-header">
+                        <h2 id="form-title" class="text-2xl font-bold">Yeni Oyun Ekle</h2>
+                        <p class="text-muted">Gerekli tüm bilgileri aşağıya girin.</p>
+                    </div>
+                    <form id="game-form" class="admin-form-grid">
+                        <input type="hidden" id="edit-game-id">
+                        
+                        <!-- General Info -->
+                        <div class="span-all grid-row-3">
+                            <div class="form-group">
+                                <label class="mb-2 block text-sm font-bold">Oyun Adı</label>
+                                <input type="text" id="game-title" required placeholder="" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="mb-2 block text-sm font-bold">Resim URL</label>
+                                <input type="text" id="image_URL" required placeholder="" class="form-input">
+                            </div>
+                            <div class="form-group">
+                                <label class="mb-2 block text-sm font-bold">Süre (Saat)</label>
+                                <input type="number" id="play_time" placeholder="40" class="form-input">
+                            </div>
+                        </div>
+
+                        <!-- Toggles -->
+                        <div class="span-all flex-row gap-4 mb-4">
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="is_featured">
+                                <span class="slider"></span>
+                                <span class="label">Featured (Hall of Fame)</span>
+                            </label>
+                            <label class="toggle-switch">
+                                <input type="checkbox" id="is_too_old">
+                                <span class="slider"></span>
+                                <span class="label">Eski Oyun (Too Old)</span>
+                            </label>
+                        </div>
+
+                        <!-- Ratings Breakdown (Sliders) -->
+                        <div class="ratings-grid span-all">
+                            <h3 class="text-xs uppercase tracking-widest text-muted font-bold mb-2">Puanlama (0 - 5)</h3>
+                            
+                            <div class="rating-row">
+                                <div class="rating-header">
+                                    <span class="rating-label">Gameplay</span>
+                                    <span class="rating-value-badge" id="val-gameplay">0</span>
+                                </div>
+                                <input type="range" id="rating_gameplay" class="rating-slider rating-input" min="0" max="1" step="0.5" value="0">
+                            </div>
+
+                            <div class="rating-row">
+                                <div class="rating-header">
+                                    <span class="rating-label">Narrative</span>
+                                    <span class="rating-value-badge" id="val-narrative">0</span>
+                                </div>
+                                <input type="range" id="rating_narrative" class="rating-slider rating-input" min="0" max="1" step="0.5" value="0">
+                            </div>
+
+                            <div class="rating-row">
+                                <div class="rating-header">
+                                    <span class="rating-label">Presentation</span>
+                                    <span class="rating-value-badge" id="val-presentation">0</span>
+                                </div>
+                                <input type="range" id="rating_presentation" class="rating-slider rating-input" min="0" max="1" step="0.5" value="0">
+                            </div>
+
+                            <div class="rating-row">
+                                <div class="rating-header">
+                                    <span class="rating-label">Technical</span>
+                                    <span class="rating-value-badge" id="val-technical">0</span>
+                                </div>
+                                <input type="range" id="rating_technical" class="rating-slider rating-input" min="0" max="1" step="0.5" value="0">
+                            </div>
+
+                            <div class="rating-row">
+                                <div class="rating-header">
+                                    <span class="rating-label">Impact</span>
+                                    <span class="rating-value-badge" id="val-impact">0</span>
+                                </div>
+                                <input type="range" id="rating_impact" class="rating-slider rating-input" min="0" max="1" step="0.5" value="0">
+                            </div>
+
+                            <!-- Live Total Score Card -->
+                            <div class="total-score-card">
+                                <div class="total-score-info">
+                                    <span class="total-score-label">Live Total Score</span>
+                                </div>
+                                <div class="total-score-value" id="display-total-score">0.0</div>
+                                <input type="hidden" id="total_score" value="0">
+                            </div>
+                        </div>
+
+                        <div class="span-all flex-row justify-end gap-2 mt-6">
+                            <button type="button" class="btn btn-secondary" id="cancel-edit-btn">İptal</button>
+                            <button type="submit" class="btn btn-primary" id="save-game-btn">Kaydet</button>
+                        </div>
+                    </form>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { ThemeManager } from './src/js/managers/ThemeManager.js';
+        import { SupabaseClient } from './src/js/services/SupabaseClient.js';
+        import { GameRepository } from './src/js/services/GameRepository.js';
+        import { AuthManager } from './src/js/managers/AuthManager.js';
+        import { AdminManager } from './src/js/managers/AdminManager.js';
+        import { FloatingParticles } from './src/js/components/FloatingParticles.js';
+
+        // Init Services
+        const SB_URL = 'https://rdjemngpznhnrxmohpno.supabase.co';
+        const SB_KEY = 'sb_publishable_ar9comf9LoaXc60R0Q6MCA_WQdja9jT';
+        
+        const sbClient = SupabaseClient.getInstance(SB_URL, SB_KEY);
+        const gameRepo = new GameRepository(sbClient);
+        const auth = new AuthManager(sbClient);
+        
+        // Init Managers
+        const theme = new ThemeManager('theme-toggle');
+        const floating = new FloatingParticles('float-particles-canvas');
+        const admin = new AdminManager(auth, gameRepo);
+
+        admin.init();
+    </script>
+</body>
+
+</html>

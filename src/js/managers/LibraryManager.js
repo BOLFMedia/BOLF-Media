@@ -5,9 +5,9 @@
 import { GameCard } from '../components/GameCard.js';
 
 export class LibraryManager {
-  constructor(containerId, supabaseService, translationManager) {
+  constructor(containerId, gameRepository, translationManager) {
     this.container = document.getElementById(containerId);
-    this.service = supabaseService;
+    this.repository = gameRepository;
     this.i18n = translationManager;
     this.allGames = [];
     this.filteredGames = [];
@@ -15,9 +15,13 @@ export class LibraryManager {
 
   async init() {
     this.container.innerHTML = `<p class="loading-text">${this.i18n.get('loading')}</p>`;
-    this.allGames = await this.service.fetchGames();
-    this.filteredGames = [...this.allGames];
-    this.render();
+    try {
+      this.allGames = await this.repository.getAllGames();
+      this.filteredGames = [...this.allGames];
+      this.render();
+    } catch (error) {
+      this.container.innerHTML = `<p class="error-text">${this.i18n.get('error-loading')}</p>`;
+    }
   }
 
   sort(criteria) {

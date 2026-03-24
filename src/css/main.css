@@ -75,7 +75,27 @@ header {
 .nav-group-right {
   display: flex;
   align-items: center;
-  gap: 2.5rem;
+  gap: 1.5rem;
+}
+
+.mobile-menu-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: var(--text-main);
+  cursor: pointer;
+  padding: 0.5rem;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    display: none;
+  }
+  .mobile-menu-btn {
+    display: flex;
+  }
 }
 
 .nav-links {
@@ -83,6 +103,7 @@ header {
   align-items: center;
   gap: 2rem;
 }
+
 
 .nav-link {
   text-decoration: none;
@@ -183,6 +204,7 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+  text-decoration: none;
 }
 
 .btn-icon:hover {
@@ -302,16 +324,37 @@ header {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding: 2rem;
 }
 
 .hero-title.large {
-  font-size: clamp(4rem, 15vw, 10rem);
+  font-size: clamp(3rem, 15vw, 10rem);
   font-weight: 800;
   line-height: 0.9;
-  letter-spacing: 0; /* Reset for better legibility */
-  margin-bottom: 4rem; /* Increased spacing */
+  letter-spacing: 0;
+  margin-bottom: 2.5rem;
   color: var(--text-main);
+  cursor: default; /* Do not change cursor on hover */
+  user-select: none; /* Recommended for large brand titles */
 }
+
+
+@media (max-width: 768px) {
+  .hero-title.large {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+    margin-bottom: 1.5rem;
+  }
+  .social-links {
+    gap: 1rem;
+    margin-bottom: 3rem;
+  }
+  .social-btn {
+    width: 56px;
+    height: 56px;
+    font-size: 1.35rem;
+  }
+}
+
 
 
 .social-links {
@@ -407,6 +450,30 @@ header {
   flex-wrap: wrap;
   gap: 2rem;
 }
+
+@media (max-width: 768px) {
+  .toolbar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 1.25rem;
+    padding: 1.5rem 0;
+  }
+  
+  .sort-group {
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 0.5rem 0;
+    justify-content: flex-start !important;
+    gap: 0.5rem !important;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  
+  .sort-group::-webkit-scrollbar {
+    display: none;
+  }
+}
+
 
 .btn-sort {
   background-color: var(--bg-soft);
@@ -514,3 +581,33 @@ header {
   font-weight: 700;
   font-size: 0.825rem;
 }
+
+/* Fix for mobile card sizing */
+@media (max-width: 480px) {
+  .game-card {
+    height: 400px;
+  }
+  .card-back {
+    padding: 1.5rem;
+  }
+  .hero-title-small {
+    font-size: 2.5rem;
+  }
+}
+
+/* Utility Classes */
+.hidden { display: none !important; }
+.w-full { width: 100% !important; }
+.flex-row { display: flex; align-items: center; }
+.justify-end { justify-content: flex-end; }
+.gap-2 { gap: 0.5rem; }
+.gap-4 { gap: 1rem; }
+.ml-2 { margin-left: 0.5rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-6 { margin-bottom: 1.5rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.p-4 { padding: 1rem; }
+.text-error { color: #ff4d4d; }
+.text-xs { font-size: 0.75rem; }
+
