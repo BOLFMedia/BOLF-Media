@@ -12,7 +12,7 @@ export class GameCard {
   render() {
     const {
       title,
-      image_URL,
+      image_url,
       play_time,
       is_too_old,
       is_featured,
@@ -48,7 +48,7 @@ export class GameCard {
           
           <!-- Front Side -->
           <div class="card-front backface-hidden overflow-hidden">
-            <div class="h-full w-full bg-cover bg-center bg-no-repeat" style="background-image: url('${image_URL}');">
+            <div class="h-full w-full bg-cover bg-center bg-no-repeat" style="background-image: url('${image_url}');">
               <div class="title-overlay">
                 <h3 class="text-white text-2xl font-black leading-tight tracking-tight drop-shadow-md">${title}</h3>
               </div>

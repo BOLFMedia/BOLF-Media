@@ -288,7 +288,7 @@
             container.innerHTML = games.map((game, index) => `
                 <div class="gold-card rounded-2xl overflow-hidden group transition-all hover:scale-105 duration-500 aspect-[3/4] relative">
                     <div class="gold-glow"></div>
-                    <img src="${game.image_URL}" class="absolute inset-0 w-full h-full object-cover transition-all duration-700">
+                    <img src="${game.image_url}" class="absolute inset-0 w-full h-full object-cover transition-all duration-700">
                     <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent"></div>
                     <div class="absolute top-2 left-2 bg-yellow-500 text-black p-1.5 rounded-full shadow-lg flex items-center justify-center" title="Hall of Fame">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
@@ -352,7 +352,7 @@
                     
                     <div class="relative h-full w-full rounded-2xl transition-all duration-700 preserve-3d shadow-2xl shadow-primary/20">
                         <div class="absolute inset-0 h-full w-full rounded-2xl backface-hidden overflow-hidden bg-[#161022] border border-white/5">
-                            <div class="h-full w-full bg-cover bg-center bg-no-repeat" style="background-image: url('${game.image_URL}');">
+                            <div class="h-full w-full bg-cover bg-center bg-no-repeat" style="background-image: url('${game.image_url}');">
                                 <div class="absolute inset-0 bg-gradient-to-t from-[#161022] via-transparent to-transparent opacity-90"></div>
                                 <div class="absolute bottom-6 left-6 right-6 text-left">
                                     <h3 class="text-white text-2xl font-black leading-tight tracking-tight drop-shadow-md">${game.title}</h3>

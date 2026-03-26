@@ -165,7 +165,7 @@ export class AdminManager {
     
     const gameData = {
       title: document.getElementById('game-title').value,
-      image_URL: document.getElementById('image_URL').value,
+      image_url: document.getElementById('image_url').value,
       play_time: parseInt(document.getElementById('play_time').value) || 0,
       is_featured: document.getElementById('is_featured').checked,
       is_too_old: document.getElementById('is_too_old').checked,
@@ -196,7 +196,7 @@ export class AdminManager {
     document.getElementById('form-title').textContent = 'Oyunu Düzenle';
     document.getElementById('edit-game-id').value = game.id;
     document.getElementById('game-title').value = game.title;
-    document.getElementById('image_URL').value = game.image_URL;
+    document.getElementById('image_url').value = game.image_url;
     document.getElementById('play_time').value = game.play_time;
     document.getElementById('is_featured').checked = game.is_featured;
     document.getElementById('is_too_old').checked = game.is_too_old;
