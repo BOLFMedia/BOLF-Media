@@ -4,7 +4,8 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>The Gamer Page</title>
+    <title>BOLF Medya</title>
+    <link rel="icon" type="image/png" href="./src/logo.png" />
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect" />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
@@ -339,7 +340,7 @@
                 // "Tried but too old" Şeridi - GÜNCELLENDİ (Yazı hizalaması)
                 const tooOldRibbon = game.is_too_old
                     ? `<div class="absolute top-0 right-0 w-full h-full overflow-hidden pointer-events-none z-20">
-                         <div class="absolute top-[30px] -right-[50px] w-[200px] bg-orange-600 text-white text-[10px] font-black uppercase tracking-widest py-2 pl-2 text-center rotate-45 shadow-lg border-y border-orange-400">
+                         <div class="absolute top-[30px] -right-[50px] w-[200px] bg-orange-600 text-white text-[10px] font-black uppercase tracking-widest h-8 leading-8 text-center rotate-45 shadow-lg border-y border-orange-400">
                            Tried but too old
                          </div>
                        </div>`
@@ -391,9 +392,9 @@
             return `
                 <div class="flex items-center justify-between group/stat">
                     <span class="text-gray-300 text-base font-medium tracking-wide group-hover/stat:text-primary transition-colors">${label}</span>
-                    <div class="relative inline-block leading-none">
-                        <span class="material-symbols-outlined text-gray-700 !text-[28px]">star</span>
-                        <span class="material-symbols-outlined absolute top-0 left-0 text-primary !text-[28px] overflow-hidden transition-all duration-1000" 
+                    <div class="relative inline-block leading-none" style="width: 28px; height: 28px;">
+                        <span class="material-symbols-outlined text-gray-700 !text-[28px] block">star</span>
+                        <span class="material-symbols-outlined absolute top-0 left-0 text-primary !text-[28px] overflow-hidden transition-all duration-1000 whitespace-nowrap" 
                               style="width: ${fillPercentage}%; font-variation-settings: 'FILL' 1;">
                             star
                         </span>

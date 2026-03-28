@@ -451,6 +451,22 @@ header {
   gap: 2rem;
 }
 
+.toolbar-right {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+@media (max-width: 768px) {
+  .toolbar-right {
+    justify-content: stretch;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}
+
 @media (max-width: 768px) {
   .toolbar {
     flex-direction: column;
@@ -528,6 +544,88 @@ header {
   color: var(--text-muted);
 }
 
+/* Hall of Fame Toggle */
+.fame-toggle-container {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.35rem 0.85rem;
+  border-radius: 100px;
+  background-color: var(--bg-soft);
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.fame-toggle-container:has(#fame-toggle:checked) {
+  border-color: #fbbf24;
+  box-shadow: 0 0 15px rgba(251, 191, 36, 0.1);
+  background-color: rgba(251, 191, 36, 0.05);
+}
+
+.crown-toggle-icon {
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+}
+
+#fame-toggle:checked + .slider + .crown-toggle-icon,
+.fame-toggle-container:has(#fame-toggle:checked) .crown-toggle-icon {
+  color: #fbbf24;
+  font-variation-settings: 'FILL' 1;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 32px;
+  height: 16px;
+}
+
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: var(--text-muted);
+  opacity: 0.3;
+  transition: .4s;
+  border-radius: 20px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 10px;
+  width: 10px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+#fame-toggle:checked + .slider {
+  background-color: #fbbf24;
+  opacity: 1;
+}
+
+#fame-toggle:focus + .slider {
+  box-shadow: 0 0 1px #fbbf24;
+}
+
+#fame-toggle:checked + .slider:before {
+  transform: translateX(16px);
+}
+
 /* Utility */
 .text-center { text-align: center; }
 .text-main { color: var(--text-main); }
@@ -553,8 +651,8 @@ header {
 }
 .ribbon-text {
   position: absolute;
-  top: 30px;
-  right: -50px;
+  top: 33px;
+  right: -53px;
   width: 200px;
   background-color: #f97316;
   color: white;
@@ -562,7 +660,8 @@ header {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  padding: 0.5rem 0;
+  height: 32px;
+  line-height: 32px;
   transform: rotate(45deg);
   text-align: center;
   box-shadow: 0 4px 10px rgba(0,0,0,0.3);

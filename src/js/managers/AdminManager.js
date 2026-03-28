@@ -201,22 +201,14 @@ export class AdminManager {
     document.getElementById('is_featured').checked = game.is_featured;
     document.getElementById('is_too_old').checked = game.is_too_old;
     
-    document.getElementById('rating_gameplay').value = game.rating_gameplay;
-    document.getElementById('rating_narrative').value = game.rating_narrative;
-    document.getElementById('rating_presentation').value = game.rating_presentation;
-    document.getElementById('rating_technical').value = game.rating_technical;
-    document.getElementById('rating_impact').value = game.rating_impact;
+    document.getElementById('rating_gameplay').value = game.rating_gameplay || 0;
+    document.getElementById('rating_narrative').value = game.rating_narrative || 0;
+    document.getElementById('rating_presentation').value = game.rating_presentation || 0;
+    document.getElementById('rating_technical').value = game.rating_technical || 0;
+    document.getElementById('rating_impact').value = game.rating_impact || 0;
     
-    const formattedTotal = (game.total_score || 0).toFixed(1);
-    document.getElementById('total_score').value = formattedTotal;
-    document.getElementById('display-total-score').textContent = formattedTotal;
-
-    // Update badges manually on load
-    document.getElementById('val-gameplay').textContent = game.rating_gameplay;
-    document.getElementById('val-narrative').textContent = game.rating_narrative;
-    document.getElementById('val-presentation').textContent = game.rating_presentation;
-    document.getElementById('val-technical').textContent = game.rating_technical;
-    document.getElementById('val-impact').textContent = game.rating_impact;
+    // Recalculate total score from the assigned slider values to ensure consistency
+    this.calculateTotalScore();
 
     document.querySelectorAll('.sidebar-item').forEach(item => {
       item.classList.toggle('active', item.dataset.id === game.id);
@@ -228,12 +220,9 @@ export class AdminManager {
     this.gameForm.reset();
     document.getElementById('edit-game-id').value = '';
     document.getElementById('form-title').textContent = 'Yeni Oyun Ekle';
-    document.getElementById('display-total-score').textContent = '0.0';
     
-    // Reset badges
-    ['gameplay', 'narrative', 'presentation', 'technical', 'impact'].forEach(id => {
-      document.getElementById(`val-${id}`).textContent = '0';
-    });
+    // Explicitly reset total score fields and badges via the calculation method
+    this.calculateTotalScore();
 
     document.querySelectorAll('.sidebar-item').forEach(item => item.classList.remove('active'));
   }

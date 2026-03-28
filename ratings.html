@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BOLF Medya - Değerlendirmeler</title>
+    <title>BOLF Medya</title>
+    <link rel="icon" type="image/png" href="./src/logo.png" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200..800&display=swap"
@@ -104,10 +105,20 @@
                 </button>
             </div>
 
-            <div class="search-wrapper">
-                <span class="material-symbols-outlined search-icon">search</span>
-                <input type="text" class="search-input" data-i18n="search-placeholder" placeholder="Oyun ara..."
-                    id="search-input">
+            <div class="toolbar-right">
+                <label class="fame-toggle-container" title="Hall of Fame">
+                    <span class="material-symbols-outlined crown-toggle-icon">workspace_premium</span>
+                    <div class="switch">
+                        <input type="checkbox" id="fame-toggle">
+                        <span class="slider"></span>
+                    </div>
+                </label>
+
+                <div class="search-wrapper">
+                    <span class="material-symbols-outlined search-icon">search</span>
+                    <input type="text" class="search-input" data-i18n="search-placeholder" placeholder="Oyun ara..."
+                        id="search-input">
+                </div>
             </div>
         </section>
 
@@ -170,6 +181,7 @@
 
         // Search & Sort listeners
         document.getElementById('search-input').addEventListener('input', (e) => library.search(e.target.value));
+        document.getElementById('fame-toggle').addEventListener('change', (e) => library.filterFeatured(e.target.checked));
         document.getElementById('sort-rating').addEventListener('click', () => library.sort('rating'));
         document.getElementById('sort-name').addEventListener('click', () => library.sort('name'));
         document.getElementById('sort-newest').addEventListener('click', () => library.sort('newest'));

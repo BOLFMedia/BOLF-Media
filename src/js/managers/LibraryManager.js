@@ -11,14 +11,15 @@ export class LibraryManager {
     this.i18n = translationManager;
     this.allGames = [];
     this.filteredGames = [];
+    this.currentQuery = '';
+    this.showFeaturedOnly = false;
   }
 
   async init() {
     this.container.innerHTML = `<p class="loading-text">${this.i18n.get('loading')}</p>`;
     try {
       this.allGames = await this.repository.getAllGames();
-      this.filteredGames = [...this.allGames];
-      this.render();
+      this.applyFilters();
     } catch (error) {
       this.container.innerHTML = `<p class="error-text">${this.i18n.get('error-loading')}</p>`;
     }
@@ -36,10 +37,21 @@ export class LibraryManager {
   }
 
   search(query) {
-    const q = query.toLowerCase();
-    this.filteredGames = this.allGames.filter(game => 
-      game.title.toLowerCase().includes(q)
-    );
+    this.currentQuery = query.toLowerCase();
+    this.applyFilters();
+  }
+
+  filterFeatured(showOnly) {
+    this.showFeaturedOnly = showOnly;
+    this.applyFilters();
+  }
+
+  applyFilters() {
+    this.filteredGames = this.allGames.filter(game => {
+      const matchesSearch = game.title.toLowerCase().includes(this.currentQuery);
+      const matchesFeatured = !this.showFeaturedOnly || game.is_featured;
+      return matchesSearch && matchesFeatured;
+    });
     this.render();
   }
 
